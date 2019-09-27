@@ -1,3 +1,3 @@
-const list = require('./lista.js');
+const list = require('./listAlgorithm.js');
 
 module.exports = list
