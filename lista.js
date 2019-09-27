@@ -12,7 +12,7 @@ class list {
 	}
 	retira(apontador) {
 		let newList = []
-		if (apontador >= this.list.length) {
+		if (apontador >= this.list.length || apontador < 0) {
 			console.log('Err: Posição não existe')
 			return this.list
 		} else {
