@@ -1,20 +1,45 @@
 'use strict'
+class MyCustomError extends Error {
+	constructor(options) {
+		super()
+		this.errors = options.errors;
+		this.name = 'MyCustomError';
+	}
+}
 
-class list {
+
+class List {
 	constructor(list) {
 		this.list = list
 	}
-	insere (...data) {
+	insere(...data) {
+		if (data.length < 1) {
+			throw new MyCustomError({
+				errors: [{
+					message: "arguments not null"
+				}]
+			})
+		}
 		for (let value of data) {
 			this.list.push(value)
 		}
 		return this.list;
 	}
+	isAny() {
+		if (this.list.length < 1) {
+			return true
+		} else {
+			return false
+		}
+	}
 	retira(apontador) {
 		let newList = []
 		if (apontador >= this.list.length || apontador < 0) {
-			console.log('Err: Posição não existe')
-			return this.list
+			throw new MyCustomError({
+				errors: [{
+					message: 'Posição não existe'
+				}]
+			})
 		} else {
 			for (let i = 0; i < this.list.length; i++) {
 				if (i != apontador) {
@@ -23,15 +48,12 @@ class list {
 			}
 		}
 		this.list = newList
-		return this.list		
+		return this.list
 	}
 }
 
 module.exports = {
-	insere: function (array, ...data) {
-		return new list(array).insere(...data)
-	},
-	retira: function (array, apontador) {
-		return new list(array).retira(apontador)	
-	} 
+	list(array) {
+		return new List(array)
+	}
 }
